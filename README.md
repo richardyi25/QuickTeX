@@ -17,4 +17,4 @@ For example, `\frac{1}{2}` becomes `#frac(1 @ 2)`
 
 produces
 
-$$1 +\left( \frac{1}{\sum_{i=0}^{n}{\sum_{j=0}^{n}{\left\langle i, j \right\rangle}}} \right)^{\dfrac{\partial d^2u}{\partial dx^2}\big|_{x=0}}$$
+$$1 +\left( \frac{1}{\sum_{i=0}^{n}\sum_{j=0}^{n}\left\langle i, j \right\rangle} \right)^{\dfrac{\partial d^2u}{\partial dx^2}\big|_{x=0}}$$
