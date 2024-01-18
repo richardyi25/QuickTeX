@@ -1,0 +1,32 @@
+use crate::cst::*;
+
+#[LALR]
+grammar;
+
+pub Expr: Box<CstExpr> = {
+    <e:Expr><t:Term> => Box::new(CstExpr::List(e, t)),
+    <t:Term> => Box::new(CstExpr::Term(t))
+};
+
+Term: Box<CstTerm> = {
+    <c:Code> => Box::new(CstTerm::Code(c)),
+    <f:Function> => Box::new(CstTerm::Function(f))
+}
+
+Code: String = {
+    r"[^#\(\)@]+" => String::from(<>.trim())
+}
+
+Function: Box<CstFunction> = {
+    <f:FuncName> => Box::new(CstFunction::NoArgs(f)),
+    <f:FuncName> "(" <a:ArgList> ")" => Box::new(CstFunction::WithArgs(f, a)),
+}
+
+FuncName: String = {
+    r"#([a-z]|[A-Z]|[0-9])+" => String::from(<>)
+}
+
+ArgList: Box<CstArglist> = {
+    <a:ArgList> "@" <e:Expr> => Box::new(CstArglist::List(a, e)),
+    <e:Expr> => Box::new(CstArglist::Expr(e))
+}
